@@ -20,7 +20,7 @@
 4. 原创设置页交互原型，与正式宿主配置分开。实机检测可在用户主动开启后运行；模拟设备必须标明。
 5. 隔离的隐藏 Electron 验收、单元与权限反例、三仓类型和文档同步。
 
-第一阶段不含震动、同机多人、陀螺仪、触摸板或自适应扳机。六款游戏全部接入仍是后续里程碑，不能用样例成功代替六款验收。
+第一阶段不含震动、同机多人、陀螺仪、触摸板或自适应扳机。七款游戏全部接入仍是后续里程碑，不能用样例成功代替七款验收。
 
 ## 接口
 
@@ -52,7 +52,7 @@
 
 - M1：SDK 与最小插件在真实隔离宿主中连通；生命周期、配置持久化、权限、生成桥和类型通过。
 - M2：macOS + DualSense 真机验证首次激活、焦点、按钮、轴、USB/蓝牙分别记录；设置原型评审。
-- M3：黄金矿工与赛车全流程适配；再推广大乱斗、颜料、躲猫猫和猫猫点击游戏。
+- M3：黄金矿工与赛车全流程适配；再推广大乱斗、颜料、躲猫猫、水球和猫猫点击游戏。
 - M4：完整受影响回归、兼容记录及分发材料；实际发布另行进行。
 
 当前硬件尚未完成测试。可交互原型不代表生产设置页面已经交付。
@@ -62,3 +62,22 @@
 - [Gamepad specification](https://www.w3.org/TR/gamepad/)
 - [Electron contextBridge](https://www.electronjs.org/docs/latest/api/context-bridge)
 - [Electron sandbox](https://www.electronjs.org/docs/latest/tutorial/sandbox)
+
+
+## 2026-09-30 游戏基线更新
+
+宿主输入候选先合并用户指定的最新 Test f1f1bbf0，重新执行全部首批门禁，包括本机 HTML 授权记忆和账号授权。游戏从下面的源码基线开工，不回退已经修复的联机规则。
+
+| 游戏 | 版本 / 提交 | 接入边界 |
+| --- | --- | --- |
+| 黄金矿工 | 0.5.1 / 76ce2cc | 使用现有 fire() 节流和发射计数，不另发网络消息 |
+| 桌宠赛车 | 0.5.1 / 0e275f1 | 模拟转向、道具边沿；SDK 接管时关闭旧手柄读取 |
+| 桌宠大乱斗 | 0.5.2 / d48d897 | 保留按住和边沿；SDK 与旧采样互斥，reset 显式取消蓄力 |
+| 躲猫猫对决 | 2.0.2 / 276d020 | 大厅确认姿势、局内锁定；躲藏方左右移动/旋转，寻找方二维瞄准 |
+| 颜料大作战 | 0.1.0 / acfa928 | 双摇杆、开火和潜行只影响本机输入 |
+| 水球大作战 | 0.1.1 / ebf28c6 | 四方向后按优先；放水球、用针各一次边沿，踢球仍由移动触发 |
+| 巴巴波以大战比比拉布 | 1.6.0 / codex/account-leaderboard@c906995 | 使用 bababoyi-leaderboard 独立源码仓，保留真实命中、先计时再判定与账号排行榜 |
+
+水球加入七款清单；本地 readInput() 适配，不改游戏规则或 req-place/req-needle 的可靠网络事件。黄金矿工只允许用 GOLD_PUBLIC=1 构建公开产物，私人角色包不能随源码或 HTML 分发。坦克营未开工，后续直接使用动作标准。
+
+This batch adds Water Balloon to the seven-game plan. Use the listed post-network-fix baselines, retain existing action counters and network rules, and make legacy Gamepad polling yield whenever the SDK owns input, including suspended states. Brawl needs explicit charge cancellation rather than a simulated release. Hide-and-seek locks the pose after lobby confirmation; gameplay keeps lateral movement, planar rotation and two-dimensional aiming. Bababoyi must retain its account-leaderboard branch and real hit-testing/timing. Public Gold Miner builds require GOLD_PUBLIC=1; private character assets must not be distributed.

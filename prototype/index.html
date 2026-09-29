@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'">
+  <title>手柄设置 · 交互原型</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="#connection" aria-label="手柄设置首页"><span class="brand-mark" aria-hidden="true">✦</span><span>一起玩<span class="brand-sub">GAMEPAD</span></span></a>
+    <div class="nav-label">我的手柄</div>
+    <nav aria-label="手柄设置页面">
+      <button class="nav-item active" data-page="connection" aria-current="page"><span class="nav-icon" aria-hidden="true">⌘</span>连接与测试</button>
+      <button class="nav-item" data-page="mapping"><span class="nav-icon" aria-hidden="true">⇄</span>按键映射</button>
+      <button class="nav-item" data-page="calibration"><span class="nav-icon" aria-hidden="true">◎</span>手感校准</button>
+    </nav>
+    <div class="sidebar-bottom"><span class="prototype-tag">交互原型 · 01</span><p>你的习惯，<br>带进每一场游戏。</p><label class="theme-label" for="theme">外观<select id="theme"><option value="light">浅色</option><option value="dark">深色</option><option value="auto">跟随系统</option></select></label></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span>手柄设置</span><span class="local-note"><span aria-hidden="true">◉</span> 仅保存在此原型</span></header>
+    <main>
+      <section id="page-connection" class="page" aria-labelledby="connection-title">
+        <div class="page-heading"><div><p class="eyebrow">准备好，再出发</p><h1 id="connection-title">连接与测试</h1><p>按一按、推一推，确认每个操作都有回应。</p></div><span id="connection-status" class="status-chip">尚未连接</span></div>
+        <article class="device-card">
+          <div class="device-card-top"><div><div class="device-kicker" id="device-kicker">支持标准手柄</div><h2 id="device-name">让手柄就位</h2><p id="device-description">连接你的 PS5、PS4 或 Xbox 手柄，开始一次小测试。</p></div><span class="device-number" aria-hidden="true">01</span></div>
+          <div class="controller-stage" aria-label="手柄按键状态示意">
+            <svg class="controller" viewBox="0 0 520 250" role="img" aria-labelledby="controller-title">
+              <title id="controller-title">手柄示意图，按下的按钮会高亮</title>
+              <path class="controller-shadow" d="M106 224c-41 0-59-35-42-78l21-57c10-29 35-49 64-49h222c30 0 55 20 65 49l21 57c17 43-1 78-42 78-22 0-40-19-55-44H161c-15 25-33 44-55 44z"/>
+              <path class="controller-body" d="M105 211c-33 0-49-29-35-65l21-57c9-25 32-43 59-43h220c27 0 50 18 59 43l21 57c14 36-2 65-35 65-22 0-39-20-52-46H157c-13 26-30 46-52 46z"/>
+              <path class="controller-center" d="M179 62h162l-9 75c-17 12-42 18-72 18s-55-6-72-18z"/>
+              <rect class="touchpad" x="204" y="56" width="112" height="55" rx="10"/>
+              <path class="lightbar" d="M209 115h102"/>
+              <g class="dpad" transform="translate(138 106)"><rect x="-11" y="-30" width="22" height="60" rx="5"/><rect x="-30" y="-11" width="60" height="22" rx="5"/><path d="M-3-21h6m-6 42h6m-24-21v6m42-6v6"/></g>
+              <g class="analog" transform="translate(204 155)"><circle r="29"/><circle id="left-stick-dot" class="stick" r="21"/></g>
+              <g class="analog" transform="translate(316 155)"><circle r="29"/><circle id="right-stick-dot" class="stick" r="21"/></g>
+              <g class="face-button" data-button-index="3"><circle cx="382" cy="78" r="15"/><text id="face-north" x="382" y="84">△</text></g>
+              <g class="face-button" data-button-index="2"><circle cx="353" cy="107" r="15"/><text id="face-west" x="353" y="113">□</text></g>
+              <g class="face-button" data-button-index="1"><circle cx="411" cy="107" r="15"/><text id="face-east" x="411" y="113">○</text></g>
+              <g class="face-button" data-button-index="0"><circle cx="382" cy="136" r="15"/><text id="face-south" x="382" y="142">×</text></g>
+              <rect class="shoulder" data-button-index="4" x="107" y="33" width="70" height="16" rx="7"/><rect class="shoulder" data-button-index="5" x="343" y="33" width="70" height="16" rx="7"/>
+              <circle class="menu-button" data-button-index="9" cx="335" cy="75" r="5"/><circle class="menu-button" data-button-index="8" cx="185" cy="75" r="5"/>
+              <text class="controller-label" x="260" y="201" text-anchor="middle">READY WHEN YOU ARE</text>
+            </svg>
+          </div>
+          <div class="device-actions"><button id="connect-real" class="button primary">连接我的手柄 <span aria-hidden="true">↗</span></button><button id="toggle-simulation" class="button secondary">试试模拟手柄</button><button id="stop-detection" class="button text-button" hidden>停止检测</button></div>
+          <p id="device-help" class="device-help">用 USB 连接，或先在 macOS 蓝牙设置中配对；然后按一下手柄按钮。</p>
+        </article>
+        <div class="section-heading"><h2>实时输入</h2><span id="input-source">等待设备</span></div>
+        <div class="input-grid">
+          <div class="readout"><span id="left-readout-label">左摇杆</span><strong id="left-value">0.00 <small>/</small> 0.00</strong><div class="mini-track"><i id="left-track"></i></div></div>
+          <div class="readout"><span id="right-readout-label">右摇杆</span><strong id="right-value">0.00 <small>/</small> 0.00</strong><div class="mini-track"><i id="right-track"></i></div></div>
+          <div class="readout"><span id="trigger-label">L2 / R2</span><strong id="trigger-value">0% <small>/</small> 0%</strong><div class="mini-track"><i id="trigger-track"></i></div></div>
+          <div class="readout"><span>正在按下</span><strong id="button-value">—</strong><span class="readout-sub" id="button-detail">松开即归零</span></div>
+        </div>
+        <div class="simulation-controls" id="simulation-controls" hidden><div><strong>模拟操作</strong><span>这是演示数据，可用方向键移动、J / K 按键。</span></div><div class="button-group"><button class="button small" id="sim-press">按下 ×</button><button class="button small" id="sim-stick">摇杆向右</button><button class="button small" id="sim-clear">全部松开</button></div></div>
+        <div class="quiet-note"><span aria-hidden="true">ⓘ</span><p>此原型只测试连接和设置交互。游戏中的手柄支持会在正式接入后生效。</p></div>
+      </section>
+
+      <section id="page-mapping" class="page" aria-labelledby="mapping-title" hidden>
+        <div class="page-heading"><div><p class="eyebrow">让操作顺手一点</p><h1 id="mapping-title">按键映射</h1><p>保留熟悉的习惯，也给每个游戏留一点不同。</p></div></div>
+        <div class="settings-card scope-card"><label for="profile">设置范围<select id="profile"><option value="global">全局 · 通用菜单</option><option value="gold-miner">黄金矿工</option><option value="pet-kart">宠物卡丁车</option><option value="pet-brawl">宠物乱斗</option><option value="pet-hide-duel">躲猫猫</option><option value="pet-paint">宠物涂色</option><option value="baba-bibi">巴巴比比</option></select></label><div><span class="field-label">按键显示</span><div class="segmented" role="group" aria-label="按键布局"><button id="layout-ps" aria-pressed="true">PlayStation</button><button id="layout-xbox" aria-pressed="false">Xbox</button></div></div></div>
+        <div class="inherit-row" id="inherit-row" hidden><div><strong>为这个游戏单独设置</strong><p>关闭时，菜单跟随全局，游戏操作使用推荐布局。</p></div><label class="switch"><input id="game-override" type="checkbox" aria-label="为这个游戏单独设置"><span></span></label></div>
+        <div class="section-heading"><h2 id="mapping-group-title">通用菜单操作</h2><span id="mapping-scope-tag">所有游戏共用</span></div>
+        <div class="settings-card mapping-table" id="mapping-table"></div>
+        <div class="conflict-message" id="mapping-conflict" role="alert" hidden></div>
+        <div class="quiet-note"><span aria-hidden="true">ⓘ</span><p id="mapping-note">全局菜单设置统一确认、返回与菜单操作。每款游戏的移动、攻击等玩法操作在对应游戏中调整。</p></div>
+        <button id="reset-mapping" class="button text-button reset-button">↺ 恢复当前范围默认</button>
+      </section>
+
+      <section id="page-calibration" class="page" aria-labelledby="calibration-title" hidden>
+        <div class="page-heading"><div><p class="eyebrow">从细微处，找到手感</p><h1 id="calibration-title">手感校准</h1><p>过滤摇杆轻微漂移，让每次移动都出于你的本意。</p></div><span class="subtle-chip">全局设置</span></div>
+        <div class="calibration-grid">
+          <article class="settings-card stick-card"><div class="section-heading"><h2>左摇杆</h2><span class="small-caption">移动</span></div><div class="stick-plot" id="left-plot"><div class="crosshair horizontal"></div><div class="crosshair vertical"></div><div class="deadzone-disc" id="left-deadzone-disc"></div><div class="plot-dot" id="left-plot-dot"></div></div><div class="range-label"><label for="deadzone-left">中心死区</label><output id="deadzone-left-value" for="deadzone-left">12%</output></div><input type="range" id="deadzone-left" min="0" max="40" step="1" value="12"><div class="range-scale"><span>灵敏</span><span>更稳</span></div><div class="plot-readout">原始 <span id="cal-left-raw">0.00</span><span>→</span>输出 <strong id="cal-left-output">0.00</strong></div></article>
+          <article class="settings-card stick-card"><div class="section-heading"><h2>右摇杆</h2><span class="small-caption">视角 / 瞄准</span></div><div class="stick-plot" id="right-plot"><div class="crosshair horizontal"></div><div class="crosshair vertical"></div><div class="deadzone-disc" id="right-deadzone-disc"></div><div class="plot-dot" id="right-plot-dot"></div></div><div class="range-label"><label for="deadzone-right">中心死区</label><output id="deadzone-right-value" for="deadzone-right">12%</output></div><input type="range" id="deadzone-right" min="0" max="40" step="1" value="12"><div class="range-scale"><span>灵敏</span><span>更稳</span></div><div class="plot-readout">原始 <span id="cal-right-raw">0.00</span><span>→</span>输出 <strong id="cal-right-output">0.00</strong></div></article>
+        </div>
+        <article class="settings-card calibration-guide"><div class="guide-icon" aria-hidden="true">◎</div><div><h2>不确定该调多少？</h2><p id="calibration-description">连接真实手柄后，让双手离开摇杆，测量静止时的轻微偏移。</p><div class="button-group"><button id="start-calibration" class="button secondary" disabled>测量静止漂移</button><button id="cancel-calibration" class="button small" hidden>取消测量</button><button id="apply-calibration" class="button primary small" hidden>使用建议值</button><button id="simulate-drift" class="button small">演示轻微漂移</button></div><p id="calibration-result" class="calibration-result" role="status"></p></div></article>
+        <div class="quiet-note"><span aria-hidden="true">ⓘ</span><p>蓝色区域内的微小移动会被忽略。建议先小幅调整，再在游戏中确认。原型中的调整只改变这里的测试输出。</p></div>
+        <button id="reset-calibration" class="button text-button reset-button">↺ 恢复默认死区</button>
+      </section>
+    </main>
+    <footer class="savebar"><div><strong id="save-state">设置已保存</strong><span id="save-detail">只影响此原型，不改变游戏或宿主。</span></div><div class="button-group"><button class="button secondary" id="discard" disabled>撤销修改</button><button class="button primary" id="save" disabled>保存设置</button></div></footer>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
