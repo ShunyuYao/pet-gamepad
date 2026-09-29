@@ -23,3 +23,11 @@ AI 复查以重放测试发现：旧停用可能注销新实例、状态回调�
 ## English
 
 This unreleased batch includes the ordinary provider plugin, an action SDK sample and an interactive settings proposal. Six plugin lifecycle tests, 17 real isolated-host input checks and 70 prototype interaction/persistence assertions passed. Host SDK regressions and the actual type/scaffold delivery checks also passed. Synthetic input is not hardware evidence. The production settings panel, six game adapters, macOS/DualSense USB/Bluetooth/focus acceptance and all package/marketplace releases remain pending.
+
+## 2026-09-30 基线迁移复验 / Baseline refresh
+
+宿主候选现已合并 Test `f1f1bbf0`，其中包含远端 Test `ffd42a8d`，同时保留 HTML 授权记忆、账号授权和手柄输入。重新执行本仓 `test:delivery`：6 组插件测试、17 项真实隐藏宿主输入检查、59 + 11 项原型交互/持久化断言全部通过。类型包与脚手架在真实候选宿主路径上的交付检查无 SKIP，work 当前公开方法数为 27。
+
+游戏范围扩为七款，新增水球；各仓固定提交见 [设计记录](design.md)。先黄金矿工、赛车，再推广其余游戏。游戏适配、正式设置面板和 macOS + PS5 实测仍未完成。本仓为公开项目；未发布安装包、npm 或市场条目。
+
+The candidate host now includes Test `f1f1bbf0`, retaining remembered HTML consent, account authorization and game input. All 6 plugin tests, 17 hidden real-host checks and 70 prototype assertions passed again. Type/scaffold checks ran against the actual candidate with no skips; work exposes 27 public methods. Scope now covers seven games including Waterball. Game adapters, the production settings panel and hardware acceptance remain pending; no package or marketplace release was made.

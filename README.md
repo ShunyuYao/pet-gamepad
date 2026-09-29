@@ -36,10 +36,10 @@ PET_HOST_DIR=/absolute/desktop-pet npm run test:delivery
 
 `test:plugin` 验证插件生命周期；`test:host` 安装此仓库实际插件并验证隐藏宿主；`test:prototype:e2e` 验证原型真实键盘交互及新进程保存。缺宿主不能当作跳过成功。
 
-`examples/action-work.html` 是动作 API 验证页。正式设置面板和六款游戏适配尚未完成；现有正式宿主不保证支持这个开发候选。真机 USB、蓝牙和原生焦点测试记录见后续验收，当前不标记通过。
+`examples/action-work.html` 是动作 API 验证页。正式设置面板和七款游戏适配尚未完成；现有正式宿主不保证支持这个开发候选。真机 USB、蓝牙和原生焦点测试记录见后续验收，当前不标记通过。
 
 ### Development preview and checks
 
-Run `npm run dev:prototype` for the local interactive proposal. It has separate prototype storage; no host settings are changed. The full delivery command above requires the actual experimental host checkout and its Electron dependencies. It exercises the real plugin, isolated host and prototype. The six game adapters, production settings panel and physical controller compatibility are not yet delivered. No package or marketplace release has been made.
+Run `npm run dev:prototype` for the local interactive proposal. It has separate prototype storage; no host settings are changed. The full delivery command above requires the actual experimental host checkout and its Electron dependencies. It exercises the real plugin, isolated host and prototype. The seven game adapters, production settings panel and physical controller compatibility are not yet delivered. No package or marketplace release has been made.
 
 首批范围与证据见 [交付记录](docs/delivery.md)，设备测试见 [真机验收表](docs/hardware-acceptance.md)。
