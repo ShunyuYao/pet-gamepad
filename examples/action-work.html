@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>手柄动作接入样例</title>
+<script type="application/json" id="pet-sdk">{"version":1,"permissions":["service:gamepad-input"],"network":[]}</script>
+<style>body{font:16px system-ui;padding:32px;background:#f6f7fa;color:#1e2235}button{font:inherit;padding:10px 18px}pre{white-space:pre-wrap}</style></head><body>
+<h1>手柄动作接入样例</h1><p>开发验证页。需要支持实验性输入能力的宿主和已启用的手柄插件。键盘方向键始终可用。</p>
+<button id="authorize">授权手柄支持</button><button id="connect">连接输入</button><button id="menu">菜单模式</button><button id="play">游戏模式</button>
+<p id="status" aria-live="polite">尚未连接</p><pre id="output"></pre>
+<script>
+window.definition={protocolVersion:1,actionSchemaVersion:1,title:'手柄动作接入样例',actions:{steer:{type:'axis1d',range:'signed',label:'转向'},accelerate:{type:'axis1d',range:'unsigned',label:'加速'},jump:{type:'button',label:'跳跃'}},bindings:{gameplay:{steer:[{control:'leftStick.x'}],accelerate:[{control:'rightTrigger'}],jump:[{control:'face.south'}]}}};
+const status=document.querySelector('#status');
+document.querySelector('#authorize').onclick=async()=>{try{window.grant=await pet.capabilities.request();status.textContent=window.grant.status;}catch(e){window.error=e.message;status.textContent=e.message;}};
+document.querySelector('#connect').onclick=async()=>{try{if(!window.pet?.input){status.textContent='当前环境没有手柄插件接口，键盘仍可用';return;}window.connection=await pet.input.connect(window.definition);pet.input.onStatus(connection.sessionId,s=>{window.inputStatus=s;status.textContent=s.status.availability+' / '+s.status.capture;});}catch(e){window.error=e.message;status.textContent=e.message;}};
+document.querySelector('#menu').onclick=()=>window.connection&&pet.input.setContext(connection.sessionId,'menu');
+document.querySelector('#play').onclick=()=>window.connection&&pet.input.setContext(connection.sessionId,'gameplay');
+window.keyboard=0;addEventListener('keydown',e=>{if(e.key==='ArrowLeft')window.keyboard=-1;if(e.key==='ArrowRight')window.keyboard=1;});addEventListener('keyup',()=>window.keyboard=0);addEventListener('blur',()=>window.keyboard=0);
+function frame(){
+  if(window.connection){try{window.snapshot=pet.input.read(connection.sessionId);}catch(e){window.connection=undefined;window.snapshot=null;status.textContent='输入会话已结束，键盘仍可用：'+e.message;}}
+  document.querySelector('#output').textContent=JSON.stringify({input:window.snapshot||null,keyboard:window.keyboard},null,2);
+  requestAnimationFrame(frame);
+}requestAnimationFrame(frame);
+</script></body></html>

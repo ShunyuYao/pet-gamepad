@@ -1,0 +1,15 @@
+{
+  "name": "pet-gamepad",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Experimental Desktop Pet controller plugin and interactive settings prototype",
+  "engines": {"node": ">=22.12.0"},
+  "scripts": {
+    "test": "npm run test:plugin",
+    "test:plugin": "node --test tests/plugin.test.js",
+    "test:host": "node scripts/test-host.js",
+    "test:prototype:e2e": "node tests/prototype-e2e.cjs",
+    "test:delivery": "npm test && npm run test:host && npm run test:prototype:e2e",
+    "dev:prototype": "node scripts/serve-prototype.js"
+  }
+}
